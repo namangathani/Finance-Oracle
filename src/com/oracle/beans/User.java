@@ -1,8 +1,9 @@
 package com.oracle.beans;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -17,8 +18,8 @@ public class User {
     private String name;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dob;
+    //@Temporal(TemporalType.DATE)
+    private LocalDate dob;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -53,11 +54,11 @@ public class User {
         this.name = name;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setDob(LocalDate dob2) {
+        this.dob = dob2;
     }
 
     public String getEmail() {

@@ -62,7 +62,7 @@ public class AdminDAOImpl implements AdminDAO {
         EntityManager em = emf.createEntityManager();
 
         try {
-            System.out.println("🔍 Trying native SQL login with username: " + username + ", password: " + password);
+//            System.out.println("🔍 Trying native SQL login with username: " + username + ", password: " + password);
 
             Query nativeQuery = em.createNativeQuery(
                 "SELECT * FROM ADMINS WHERE TRIM(USERNAME) = ? AND TRIM(PASSWORD) = ?", Admin.class
@@ -71,7 +71,7 @@ public class AdminDAOImpl implements AdminDAO {
             nativeQuery.setParameter(2, password.trim());
 
             List<Admin> results = nativeQuery.getResultList();
-            System.out.println("📊 Native SQL matched rows: " + results.size());
+//            System.out.println("📊 Native SQL matched rows: " + results.size());
 
             if (!results.isEmpty()) {
                 return results.get(0);
@@ -85,26 +85,26 @@ public class AdminDAOImpl implements AdminDAO {
             em.close();
         }
     }
-    
-    public void printAllUsers() {
-        EntityManager em = emf.createEntityManager();
-        try {
-            List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
-            if (users.isEmpty()) {
-                System.out.println("❌ No users found in the database.");
-            } else {
-                System.out.println("📋 Users found in database:");
-                for (User user : users) {
-                    System.out.println("👤 Username: " + user.getUsername() +
-                                       " | Password: " + user.getPassword() +
-                                       " | Status: " + user.getStatus());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
+//    
+//    public void printAllUsers() {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+//            if (users.isEmpty()) {
+//                System.out.println("❌ No users found in the database.");
+//            } else {
+//                System.out.println("📋 Users found in database:");
+//                for (User user : users) {
+//                    System.out.println("👤 Username: " + user.getUsername() +
+//                                       " | Password: " + user.getPassword() +
+//                                       " | Status: " + user.getStatus());
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            em.close();
+//        }
+//    }
 
 }

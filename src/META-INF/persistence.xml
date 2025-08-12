@@ -3,11 +3,20 @@
 	<persistence-unit name="Finance" transaction-type="RESOURCE_LOCAL">
 		<class>com.oracle.beans.User</class>
         <class>com.oracle.beans.Admin</class>
+        <class>com.oracle.beans.EMICard</class>
 		<properties>
 			<property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
 			<property name="jakarta.persistence.jdbc.user" value="naman"/>
 			<property name="jakarta.persistence.jdbc.password" value="Naman123"/>
 			<property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+			
+			<!-- Schema Generation -->
+            <!-- <property name="jakarta.persistence.schema-generation.database.action" value="update"/>-->
+            <!--<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>-->
+            <!--<property name="eclipselink.ddl-generation.output-mode" value="database"/>-->
+
+            <!-- Logging -->
+            <!-- <property name="eclipselink.logging.level" value="FINE"/> -->
 			
 		</properties>
 	</persistence-unit>
