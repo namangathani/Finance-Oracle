@@ -29,6 +29,9 @@ public class EMICard {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
+    @Column(name = "remaining_limit")
+    private Double remainingLimit;
+
     // === Getters and Setters ===
 
     public Long getCardId() {
@@ -93,5 +96,13 @@ public class EMICard {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Double getRemainingLimit() {
+        return remainingLimit;
+    }
+
+    public void setRemainingLimit(Double remainingLimit) {
+        this.remainingLimit = remainingLimit;
     }
 }

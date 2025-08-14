@@ -4,6 +4,10 @@
 		<class>com.oracle.beans.User</class>
         <class>com.oracle.beans.Admin</class>
         <class>com.oracle.beans.EMICard</class>
+        <class>com.oracle.beans.Product</class>
+        <class>com.oracle.beans.Purchase</class>
+   	 	<class>com.oracle.beans.PurchaseItem</class>
+    	<class>com.oracle.beans.Transaction</class>
 		<properties>
 			<property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
 			<property name="jakarta.persistence.jdbc.user" value="naman"/>

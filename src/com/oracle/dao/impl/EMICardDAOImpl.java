@@ -21,18 +21,37 @@ public class EMICardDAOImpl implements EMICardDAO {
             default -> 0.0;
         };
     }
+    
+//    public EMICard getCardByUserId(Long userId) {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            List<EMICard> cards = em.createNativeQuery("SELECT * FROM emi_cards WHERE user_id = ? AND status = 'Active'", EMICard.class)
+//                .setParameter(1, userId)
+//                .getResultList();
+//            
+//            System.out.println("📦 Cards found: " + cards.size());
+//            return cards.isEmpty() ? null : cards.get(0);
+//        } finally {
+//            em.close();
+//        }
+//    }
 
 
-    @Override
+
     public EMICard getCardByUserId(Long userId) {
         EntityManager em = emf.createEntityManager();
         try {
-            TypedQuery<EMICard> query = em.createQuery(
-                "SELECT c FROM EMICard c WHERE c.user.userId = :userId", EMICard.class
-            );
-            query.setParameter("userId", userId);
-            List<EMICard> cards = query.getResultList();
-            return cards.isEmpty() ? null : cards.get(0);
+        	TypedQuery<EMICard> query = em.createQuery(
+        		    "SELECT c FROM EMICard c WHERE c.user.userId = :userId AND c.status = 'Active'", EMICard.class);
+        		query.setParameter("userId", userId);
+        		List<EMICard> cards = query.getResultList();
+        		
+        		if (!cards.isEmpty()) {
+        		    System.out.println("✅ Card found: " + cards.get(0).getCardId() + " | Status: " + cards.get(0).getStatus());
+        		}
+        		
+        		return cards.isEmpty() ? null : cards.get(0);
+
         } finally {
             em.close();
         }
@@ -94,6 +113,7 @@ public class EMICardDAOImpl implements EMICardDAO {
     @Override
     public void issueCardToUser(User user, String cardType) {
         Double creditLimit = getCreditLimitByType(cardType);
+        
         if (creditLimit == 0.0) {
             System.out.println("❌ Invalid card type selected.");
             return;
@@ -121,6 +141,8 @@ public class EMICardDAOImpl implements EMICardDAO {
             card.setStatus("Active");
             card.setIssueDate(LocalDate.now());
             card.setExpiryDate(LocalDate.now().plusYears(3));
+            card.setRemainingLimit(creditLimit); // At the time of card issuance
+
 
             em.persist(card);
             tx.commit();
@@ -130,6 +152,7 @@ public class EMICardDAOImpl implements EMICardDAO {
             System.out.println("💳 Card ID: " + cardId);
             System.out.println("🔹 Card Type: " + card.getCardType());
             System.out.println("🔹 Credit Limit: ₹" + card.getCreditLimit());
+            System.out.println("🔹 Remaining Limit: ₹" + card.getRemainingLimit());
             System.out.println("🔹 Issued To: " + user.getName() + " (" + user.getUsername() + ")");
             System.out.println("🔹 Issue Date: " + card.getIssueDate());
             System.out.println("🔹 Expiry Date: " + card.getExpiryDate());
