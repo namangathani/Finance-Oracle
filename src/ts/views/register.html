@@ -1,49 +1,42 @@
 <oj-form-layout max-columns="1" direction="row">
-  <!-- Name -->
-  <oj-input-text id="regName" label-hint="Full Name" value="{{regName}}" required>
-  </oj-input-text>
 
-  <!-- Email -->
-  <oj-input-text id="regEmail" label-hint="Email Address" value="{{regEmail}}" required>
-  </oj-input-text>
+  <!-- Card Type Select with Custom Template -->
+  <oj-select-single id="regCardType"
+                    label-hint="Card Type"
+                    value="{{regCardType}}"
+                    data="[[cardTypeDP]]"
+                    required
+                    on-value-changed="[[ (event) => cardSearchText(event.detail.value) ]]">
 
-  <!-- Username -->
-  <oj-input-text id="regUsername" label-hint="Username" value="{{regUsername}}" required>
-  </oj-input-text>
+    <!-- Custom collection template -->
+    <template slot="collectionTemplate" data-oj-as="collection">
+      <oj-list-view data="[[collection.data]]"
+                    selection-mode="single"
+                    aria-label="Card type list">
 
-  <!-- Password -->
-  <oj-c-input-password id="regPassword" label-hint="Password" value="{{regPassword}}" required>
-  </oj-c-input-password>
+        <!-- Item Template -->
+        <template slot="itemTemplate" data-oj-as="item">
+          <oj-list-item-layout class="oj-listitemlayout-padding-off">
 
-  <!-- Card Type -->
-  <!-- <oj-select-single id="regCardType" label-hint="Card Type" value="{{regCardType}}" required>
-    <oj-list-view value="gold">Gold</oj-list-view>
-    <oj-list-view value="silver">Silver</oj-list-view>
-  </oj-select-single> -->
+            <!-- Primary text with highlight -->
+            <span slot="leading">
+              <oj-highlight-text text="[[item.data.label]]"
+                                 match-text="[[collection.searchText]]">
+              </oj-highlight-text>
+            </span>
 
-  <!-- CheckboxSet for Card Types -->
-  <oj-c-checkboxset id="cardTypeCheckbox"
-                    label-hint="Select Card Types"
-                    label-edge="inside"
-                    options="[[cardTypeOptions]]"
-                    value="{{selectedCardTypes}}">
-  </oj-c-checkboxset>
-  
-  <!-- Show selected card types -->
-  <div class="oj-sm-margin-3x-vertical">
-    <oj-label-value>
-      <oj-label slot="label">Selected Card Types:</oj-label>
-      <span slot="value">
-        <oj-bind-text value="[[selectedCardTypes]]"></oj-bind-text>
-      </span>
-    </oj-label-value>
-  </div>
+            <!-- Secondary text (description) -->
+            <span slot="secondary">
+              <oj-highlight-text text="[[item.data.desc]]"
+                                 match-text="[[collection.searchText]]">
+              </oj-highlight-text>
+            </span>
 
-  <!-- Submit Button -->
-  <oj-button id="registerBtn" chroming="callToAction" on-oj-action="[[registerUser]]">
-    Register
-  </oj-button>
+          </oj-list-item-layout>
+        </template>
+      </oj-list-view>
+    </template>
+
+  </oj-select-single>
+
 </oj-form-layout>
-
-<!-- Success / Error messages -->
-<oj-messages messages="{{messages}}"></oj-messages>
